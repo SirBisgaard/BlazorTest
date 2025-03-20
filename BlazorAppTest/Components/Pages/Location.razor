@@ -1,5 +1,48 @@
-﻿<h3>Location</h3>
+﻿@page "/{LocationTitle}"
+@using BlazorAppTest.Domain.Interfaces
+@using BlazorAppTest.Components.Shared
+@inject ILocationService LocationService
+@inject NavigationManager NavigationManager
+
+
+
+<div>
+    <h1>@LocationData?.Name</h1>
+    <LocationFavoriteButton Location="@LocationData"></LocationFavoriteButton>
+</div>
+
+<div>
+    <LocationIsOpen Location="@LocationData"></LocationIsOpen> - <span>@LocationData?.Address</span>
+</div>
+<div>
+    
+    <a href="tel:@LocationData?.Phone"><span><span>ico</span>@LocationData?.Phone</span></a>
+    <a href="mailto:@LocationData?.Email"><span><span>ico</span>@LocationData?.Email</span></a>
+    <span title="Support"><span>ico</span></span>
+</div>
+
+<LocationCoverPhotos Location="@LocationData"></LocationCoverPhotos>
+
+<LocationActivities Location="@LocationData"></LocationActivities>
 
 @code {
+    [Parameter]
+    public string? LocationTitle { get; set; }
+    private Domain.Location? LocationData { get; set; }
     
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(LocationTitle))
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        
+        var locations = LocationService.GetLocations();
+        LocationData = await locations.FirstOrDefaultAsync(l => l.Name == LocationTitle);
+        
+        if (LocationData is null)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
 }

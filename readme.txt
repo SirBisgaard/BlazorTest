@@ -26,3 +26,6 @@ Timelog:
 
 60min - Adding the Crud and SQLite to the project.
 30min - Adding the web api, and printing the location data from sqlites to the blazor home page.
+15min - Setting up basic navigation from home to the location page.
+60min - Adding the rest of the data structure to SqLite and added the basic html with the data in it.
+60min - Added more interactivity to the components so they share events and more when changing the state.

@@ -1,0 +1,74 @@
+﻿@rendermode InteractiveServer
+@implements IDisposable
+@using BlazorAppTest.Business.ComponentModels
+@using BlazorAppTest.Domain
+@inject LocationViewModel LocationViewModel
+
+
+@if (IsOpen())
+{
+    <span class="">Open</span>
+}
+else
+{
+    <span class="">Closed</span>
+}
+
+@code {
+    [Parameter]
+    public Domain.Location? Location { get; set; }
+    public LocationActivity? SelectedActivity { get; set; }
+
+    protected override void OnInitialized()
+    {
+        LocationViewModel.OnChange += SetActiveActivity;
+    }
+
+    private void SetActiveActivity()
+    {
+        SelectedActivity = LocationViewModel.Activity;
+        StateHasChanged();
+    }
+    
+    public void Dispose()
+    {
+        LocationViewModel.OnChange -= SetActiveActivity;
+    }
+    
+    // TODO: SOL - Well we are not finding out if it is a holiday or not. We are just checking if it is open or not. 
+    public bool IsOpen()
+    {
+        var dayOfWeek = DateTime.Now.DayOfWeek;
+        switch (dayOfWeek)
+        {
+            case DayOfWeek.Monday:
+            case DayOfWeek.Tuesday:
+            case DayOfWeek.Wednesday:
+            case DayOfWeek.Thursday:
+            case DayOfWeek.Friday:
+                // We use single to ensure there are only one. We want it to break if we messed up the data.
+                return IsOpeningHoursWithinNow(SelectedActivity?.OpeningHours.Single(oh => oh.Day == "Monday-Friday"));
+            case DayOfWeek.Saturday:
+            case DayOfWeek.Sunday:
+                // We use single to ensure there are only one. We want it to break if we messed up the data.
+                return IsOpeningHoursWithinNow(SelectedActivity?.OpeningHours.Single(oh => oh.Day == "Weekend"));
+            default:
+                return false;
+        }
+    }
+
+    private static bool IsOpeningHoursWithinNow(LocationOpeningHours? openingHours)
+    {
+        if(openingHours is null or { Open: "00:00", Close: "00:00" })
+        {
+            return false;
+        }
+                
+        var startTime = TimeSpan.Parse(openingHours.Open);
+        var endTime = TimeSpan.Parse(openingHours.Close);
+        var now = DateTime.Now.TimeOfDay;
+                
+        return now >= startTime && now <= endTime;
+    }
+
+}

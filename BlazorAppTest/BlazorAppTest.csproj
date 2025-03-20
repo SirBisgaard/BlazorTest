@@ -17,4 +17,8 @@
       <ProjectReference Include="..\BlazorAppTest.Domain\BlazorAppTest.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\images\" />
+    </ItemGroup>
+
 </Project>

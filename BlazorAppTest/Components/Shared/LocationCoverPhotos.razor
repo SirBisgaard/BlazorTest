@@ -1,5 +1,16 @@
-﻿<h3>LocationCoverPhotos</h3>
+﻿@using BlazorAppTest.Domain
+
+<div class="cover-photos">
+    @foreach (var coverPhoto in Location?.CoverPhotos ?? [])
+    {
+        <div>
+            <img src="images/@coverPhoto.Url" alt="@coverPhoto.Title" title="@coverPhoto.Title" />
+        </div>
+    }
+</div>
+               
 
 @code {
-    
+    [Parameter]
+    public Domain.Location? Location { get; set; }
 }

@@ -1,5 +1,74 @@
-﻿<h3>LocationFavoriteButton</h3>
+﻿@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+
+<div class="favorite-button">
+    <button @onclick="ToggleFavorite">
+        @if (IsFavorite)
+        {
+            <span>Remove from favorites</span>
+        }
+        else
+        {
+            <span>Add to favorites</span>
+        }
+    </button>
+</div>
+
+
 
 @code {
+    private static readonly string FavoritesKey = "favorites";
     
+    [Parameter]
+    public Domain.Location? Location { get; set; }
+
+    public bool IsFavorite { get; set; }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var favorites = await ProtectedLocalStore.GetAsync<IEnumerable<string>>(FavoritesKey);
+        if (favorites.Value is null)
+        {
+            return;
+        }
+        
+        IsFavorite = favorites.Value.Contains(Location?.Name ?? "");
+        StateHasChanged();
+    }
+
+    private async Task ToggleFavorite()
+    {
+        if (string.IsNullOrEmpty(Location?.Name))
+        {
+            return;
+        }
+        
+        var favorites = await ProtectedLocalStore.GetAsync<IEnumerable<string>>(FavoritesKey);
+        // If there are no favorites, then store the value and set the favorite to true
+        if (favorites.Value is null)
+        {
+            await ProtectedLocalStore.SetAsync(FavoritesKey, new List<string> { Location!.Name });
+            IsFavorite = true;
+            return;
+        }
+
+        // If the location is already a favorite, remove it from the list
+        if (favorites.Value.Contains(Location!.Name))
+        {
+            var newFavorites = favorites.Value.ToList();
+            newFavorites.Remove(Location!.Name);
+            await ProtectedLocalStore.SetAsync(FavoritesKey, newFavorites);
+            IsFavorite = false;
+        }
+        // If the location is not a favorite, add it to the list
+        else
+        {
+            var newFavorites = favorites.Value.ToList();
+            newFavorites.Add(Location!.Name);
+            await ProtectedLocalStore.SetAsync(FavoritesKey, newFavorites);
+            IsFavorite = true;
+        }
+    }
 }

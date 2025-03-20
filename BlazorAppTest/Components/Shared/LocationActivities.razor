@@ -1,0 +1,53 @@
+﻿@rendermode InteractiveServer
+@using BlazorAppTest.Business.ComponentModels
+@using BlazorAppTest.Domain
+@inject LocationViewModel LocationViewModel
+
+<h2>Opening Hours</h2>
+
+<div class="tabs">
+    @foreach (var activity in Location?.LocationActivities ?? [])
+    {
+        <div class="tab">
+            <span @onclick="() => SelectActivity(activity)" class="tab-button">
+                @activity.Name
+            </span>
+        </div>
+    }
+</div>
+
+<div class="tab-content">
+    @foreach (var openingHour in SelectedActivity?.OpeningHours ?? [])
+    {
+        <div class="tab-row">
+            <span>@openingHour.Day</span>
+                @if (openingHour is { Open: "00:00", Close: "00:00" })
+                {
+                    <span>Closed</span>
+                }
+                else
+                {
+                    <span>@openingHour.Open - @openingHour.Close</span>
+                }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Domain.Location? Location { get; set; }
+    public LocationActivity? SelectedActivity { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        SelectedActivity = Location?.LocationActivities.FirstOrDefault();
+        LocationViewModel.ChangeActivity(SelectedActivity);
+    }
+
+    private void SelectActivity(LocationActivity activity)
+    {
+        SelectedActivity = activity;
+        LocationViewModel.ChangeActivity(SelectedActivity);
+    }
+
+}

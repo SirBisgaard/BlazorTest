@@ -4,19 +4,31 @@
 
 <PageTitle>BlazorTest - Hjem</PageTitle>
 
-@if (locations.Count > 0)
-{
-    <ul>
-        @foreach (var location in locations)
+<h1>Velkommen til BlazorTest</h1>
+
+<nav class="flex-column">
+    <div class="nav-item px-3">
+       
+        @if (locations.Count > 0)
         {
-            <li>@location.Name</li>
+            <ul>
+                @foreach (var location in locations)
+                {
+                    <NavLink class="nav-link" href="@location.Name" Match="NavLinkMatch.All">
+                        @location.Name
+                    </NavLink>
+                }
+            </ul>
         }
-    </ul>
-}
-else
-{
-    <p><em>Der er desværre ingen afdelinger..</em></p>
-}
+        else
+        {
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                Der er ingen afdelinger
+            </NavLink>
+        }
+    </div>
+</nav>
+
 
 @code {
     private IList<Domain.Location> locations = [];

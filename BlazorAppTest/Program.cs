@@ -1,4 +1,5 @@
 using BlazorAppTest.Business;
+using BlazorAppTest.Business.ComponentModels;
 using BlazorAppTest.Components;
 using BlazorAppTest.DataAccess;
 using BlazorAppTest.DataAccess.Database;
@@ -22,6 +23,9 @@ builder.Services.AddSingleton<ISqLiteConnectionFactory>(new SqLiteConnectionFact
 // Add local services
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+
+// Add local models - Like the good old days of MVVM
+builder.Services.AddScoped<LocationViewModel>();
 
 var app = builder.Build();
 
