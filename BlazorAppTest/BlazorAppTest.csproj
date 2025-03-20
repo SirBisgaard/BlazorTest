@@ -11,4 +11,10 @@
       <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css.map" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BlazorAppTest.Business\BlazorAppTest.Business.csproj" />
+      <ProjectReference Include="..\BlazorAppTest.DataAccess\BlazorAppTest.DataAccess.csproj" />
+      <ProjectReference Include="..\BlazorAppTest.Domain\BlazorAppTest.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

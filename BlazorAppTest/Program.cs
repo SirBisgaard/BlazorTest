@@ -1,10 +1,27 @@
+using BlazorAppTest.Business;
 using BlazorAppTest.Components;
+using BlazorAppTest.DataAccess;
+using BlazorAppTest.DataAccess.Database;
+using BlazorAppTest.Domain;
+using BlazorAppTest.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Bind the AppSettings configuration
+var appSettings = new AppSettings();
+builder.Configuration.Bind(appSettings);
+
+// Add external dependencies
+builder.Services.AddSingleton<ISqLiteConnectionFactory>(new SqLiteConnectionFactory(appSettings.ConnectionStrings.SqLiteConnection));
+
+// Add local services
+builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 var app = builder.Build();
 
@@ -21,6 +38,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

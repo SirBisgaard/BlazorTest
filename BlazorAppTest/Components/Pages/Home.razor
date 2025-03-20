@@ -1,7 +1,29 @@
 ﻿@page "/"
+@using BlazorAppTest.Domain.Interfaces
+@inject ILocationService LocationService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>BlazorTest - Hjem</PageTitle>
 
-<h1>Hello, world!</h1>
+@if (locations.Count > 0)
+{
+    <ul>
+        @foreach (var location in locations)
+        {
+            <li>@location.Name</li>
+        }
+    </ul>
+}
+else
+{
+    <p><em>Der er desværre ingen afdelinger..</em></p>
+}
 
-Welcome to your new app.
+@code {
+    private IList<Domain.Location> locations = [];
+    
+    protected override async Task OnInitializedAsync()
+    {
+        locations = await LocationService.GetLocations().ToArrayAsync();
+        StateHasChanged();
+    }
+}

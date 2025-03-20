@@ -14,9 +14,15 @@ I have a crosscutting layer called Domain which contains the domain models and t
 This is not to be confused with the Domain Driven Design, but the domain classes takes inspiration and have the responsibility to do calculations and hold the data.
 I the case of this project, the domain classes are simple and only holds the data.
 
+I have added Sqlite because it gives a fast way of having a database that can be run by others.
+#Source: https://system.data.sqlite.org/src/doc/trunk/www/index.wiki
+
 Timelog: 
 
 19/03/2025 
 30min - Creating boilerplate for the project.
 20/03/2025
 15min - Creating repo and uploading to github.
+
+60min - Adding the Crud and SQLite to the project.
+30min - Adding the web api, and printing the location data from sqlites to the blazor home page.
