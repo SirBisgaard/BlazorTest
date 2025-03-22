@@ -1,41 +1,41 @@
 ﻿@page "/"
 @using BlazorAppTest.Domain.Interfaces
+@using BlazorAppTest.Components.Shared
 @inject ILocationService LocationService
 
 <PageTitle>BlazorTest - Hjem</PageTitle>
 
-<h1>Velkommen til BlazorTest</h1>
+<h1 class="mb-1">Velkommen til BlazorTest</h1>
+<p class="mb-1">Vælg en af afdelingerne herunder,<br/>
+    for at se åbningstider og billeder fra stedet.</p>
 
-<nav class="flex-column">
-    <div class="nav-item px-3">
-       
-        @if (locations.Count > 0)
+<nav class="">
+    @if (locations.Count > 0)
+    {
+        @foreach (var location in locations)
         {
-            <ul>
-                @foreach (var location in locations)
-                {
-                    <NavLink class="nav-link" href="@location.Name" Match="NavLinkMatch.All">
-                        @location.Name
-                    </NavLink>
-                }
-            </ul>
-        }
-        else
-        {
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                Der er ingen afdelinger
+            <NavLink class="mb-1" href="@location.Name" Match="NavLinkMatch.All">
+                <h2>@location.Name - <LocationIsOpen Location="@location"></LocationIsOpen> </h2>
+                <p class="text-grey">@location.Address</p>
             </NavLink>
         }
-    </div>
+    }
+    else
+    {
+        <NavLink class="" href="" Match="NavLinkMatch.All">
+            Der er ingen afdelinger
+        </NavLink>
+    }
 </nav>
 
 
 @code {
     private IList<Domain.Location> locations = [];
-    
+
     protected override async Task OnInitializedAsync()
     {
         locations = await LocationService.GetLocations().ToArrayAsync();
         StateHasChanged();
     }
+
 }

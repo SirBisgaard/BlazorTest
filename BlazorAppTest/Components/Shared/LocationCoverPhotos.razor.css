@@ -1,1 +1,21 @@
-﻿
+﻿.cover-photos {
+    white-space: nowrap;
+    overflow: scroll;
+    padding: 10px;
+    width: 100%;
+}
+
+.cover-photo {
+    display: inline-block;
+    margin-right: 10px;
+}
+.cover-photo:last-child {
+    margin-right: 0;
+}
+
+.cover-photo img {
+    max-width: 500px;
+    max-height: 150px;
+    display: inline-block;
+    border-radius: 10px;
+}

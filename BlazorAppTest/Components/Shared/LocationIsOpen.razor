@@ -5,13 +5,13 @@
 @inject LocationViewModel LocationViewModel
 
 
-@if (IsOpen())
+@if (IsOpen(SelectedActivity))
 {
-    <span class="">Open</span>
+    <span class="text-green">Open</span>
 }
 else
 {
-    <span class="">Closed</span>
+    <span class="text-red">Closed</span>
 }
 
 @code {
@@ -21,6 +21,7 @@ else
 
     protected override void OnInitialized()
     {
+        SelectedActivity = Location?.LocationActivities.FirstOrDefault(IsOpen);
         LocationViewModel.OnChange += SetActiveActivity;
     }
 
@@ -36,7 +37,7 @@ else
     }
     
     // TODO: SOL - Well we are not finding out if it is a holiday or not. We are just checking if it is open or not. 
-    public bool IsOpen()
+    public static bool IsOpen(LocationActivity? activity)
     {
         var dayOfWeek = DateTime.Now.DayOfWeek;
         switch (dayOfWeek)
@@ -47,11 +48,11 @@ else
             case DayOfWeek.Thursday:
             case DayOfWeek.Friday:
                 // We use single to ensure there are only one. We want it to break if we messed up the data.
-                return IsOpeningHoursWithinNow(SelectedActivity?.OpeningHours.Single(oh => oh.Day == "Monday-Friday"));
+                return IsOpeningHoursWithinNow(activity?.OpeningHours.Single(oh => oh.Day == "Monday-Friday"));
             case DayOfWeek.Saturday:
             case DayOfWeek.Sunday:
                 // We use single to ensure there are only one. We want it to break if we messed up the data.
-                return IsOpeningHoursWithinNow(SelectedActivity?.OpeningHours.Single(oh => oh.Day == "Weekend"));
+                return IsOpeningHoursWithinNow(activity?.OpeningHours.Single(oh => oh.Day == "Weekend"));
             default:
                 return false;
         }

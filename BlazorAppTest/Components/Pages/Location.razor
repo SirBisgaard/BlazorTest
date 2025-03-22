@@ -1,27 +1,31 @@
-﻿@page "/{LocationTitle}"
+﻿@page "/{LocationTitle:nonfile}"
 @using BlazorAppTest.Domain.Interfaces
 @using BlazorAppTest.Components.Shared
 @inject ILocationService LocationService
 @inject NavigationManager NavigationManager
 
+<PageTitle>BlazorTest - @LocationData?.Name</PageTitle>
 
 
-<div>
+<div class="location-header mb-1">
     <h1>@LocationData?.Name</h1>
     <LocationFavoriteButton Location="@LocationData"></LocationFavoriteButton>
 </div>
 
-<div>
-    <LocationIsOpen Location="@LocationData"></LocationIsOpen> - <span>@LocationData?.Address</span>
-</div>
-<div>
-    
-    <a href="tel:@LocationData?.Phone"><span><span>ico</span>@LocationData?.Phone</span></a>
-    <a href="mailto:@LocationData?.Email"><span><span>ico</span>@LocationData?.Email</span></a>
-    <span title="Support"><span>ico</span></span>
+<div class="mb-1">
+    <LocationIsOpen Location="@LocationData"></LocationIsOpen> - <span class="text-grey">@LocationData?.Address</span>
 </div>
 
-<LocationCoverPhotos Location="@LocationData"></LocationCoverPhotos>
+<div class="mb-1">
+    
+    <a class="contact-box" href="tel:@LocationData?.Phone"><span><span>ico</span>@LocationData?.Phone</span></a>
+    <a class="contact-box" href="mailto:@LocationData?.Email"><span><span>ico</span>@LocationData?.Email</span></a>
+    <span class="contact-box" title="Support"><span>ico</span></span>
+</div>
+
+<div class="mb-1">
+    <LocationCoverPhotos Location="@LocationData"></LocationCoverPhotos>
+</div>
 
 <LocationActivities Location="@LocationData"></LocationActivities>
 

@@ -17,6 +17,8 @@ I the case of this project, the domain classes are simple and only holds the dat
 I have added Sqlite because it gives a fast way of having a database that can be run by others.
 #Source: https://system.data.sqlite.org/src/doc/trunk/www/index.wiki
 
+I have styled the applications web layout so it looks like a mobile application.
+
 Timelog: 
 
 19/03/2025 
@@ -29,3 +31,7 @@ Timelog:
 15min - Setting up basic navigation from home to the location page.
 60min - Adding the rest of the data structure to SqLite and added the basic html with the data in it.
 60min - Added more interactivity to the components so they share events and more when changing the state.
+
+22/03/2025
+15min - Finding out why static files was not served because of routing was missing :nonfile in the page routing.
+75min - Adding styles to the application and making it look like a mobile application and added some more content to the home page.

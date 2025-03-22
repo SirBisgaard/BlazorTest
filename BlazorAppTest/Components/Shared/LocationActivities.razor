@@ -3,12 +3,12 @@
 @using BlazorAppTest.Domain
 @inject LocationViewModel LocationViewModel
 
-<h2>Opening Hours</h2>
+<h2 class="mb-1">Opening Hours</h2>
 
-<div class="tabs">
+<div class="tabs mb-1">
     @foreach (var activity in Location?.LocationActivities ?? [])
     {
-        <div class="tab">
+        <div class="tab @((SelectedActivity?.Name == activity.Name) ? "tab--active" : "")">
             <span @onclick="() => SelectActivity(activity)" class="tab-button">
                 @activity.Name
             </span>
@@ -19,8 +19,8 @@
 <div class="tab-content">
     @foreach (var openingHour in SelectedActivity?.OpeningHours ?? [])
     {
-        <div class="tab-row">
-            <span>@openingHour.Day</span>
+        <div class="tab-row mb-05">
+            <span class="text-grey">@openingHour.Day</span>
                 @if (openingHour is { Open: "00:00", Close: "00:00" })
                 {
                     <span>Closed</span>

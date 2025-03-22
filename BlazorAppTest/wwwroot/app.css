@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #222;
+    font-family: arial, sans-serif;
+}
+body {
+    background: #e0e0e0;
+}
+
+.page {
+    width: 500px;
+    padding: 30px;
+    background: #f8f9fa;
+}
+
+nav {
+    
+}
+nav a {
+    display: block;
+    text-decoration: none !important;
+}
+nav a:hover {
+    text-decoration: underline !important;
+}
+
+.mb-1 {
+    margin-bottom: 10px;
+}
+.mb-05 {
+    margin-bottom: 5px;
+}
+
+.text-grey {
+    color: #666;
+}
+.text-green {
+    color: #28a745;
+}
+.text-red {
+    color: #dc3545;
+}
+
+.contact-box {
+    background: #28a74533;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.contact-box:hover {
+    background: #33333333;
+}
+
+.contact-box span {
+    color: #28a745;
+}
+.contact-box span span {
+    margin-right: 5px;
+}
+
+.opening-hour-pill {
+    
+}
+
+/* favorite button */
+.favorite-button {
+    cursor: pointer;
+    background: #99999944;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    padding: 0px 10px;
+}
+.favorite-button button {
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+.favorite-button button span {
+    padding: 5px;
+    cursor: pointer;
+}
+.favorite-button--active {
+    background: #ff7979;
+}

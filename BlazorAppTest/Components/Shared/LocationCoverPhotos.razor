@@ -1,16 +1,16 @@
 ﻿@using BlazorAppTest.Domain
 
-<div class="cover-photos">
-    @foreach (var coverPhoto in Location?.CoverPhotos ?? [])
-    {
-        <div>
-            <img src="images/@coverPhoto.Url" alt="@coverPhoto.Title" title="@coverPhoto.Title" />
-        </div>
-    }
+<div class="wrapper">
+    <div class="cover-photos">
+        @foreach (var coverPhoto in Location?.CoverPhotos ?? [])
+        {
+            <div class="cover-photo">
+                <img src="images/@coverPhoto.Url" alt="@coverPhoto.Title" title="@coverPhoto.Title"/>
+            </div>
+        }
+    </div>
 </div>
-               
 
 @code {
-    [Parameter]
-    public Domain.Location? Location { get; set; }
+    [Parameter] public Domain.Location? Location { get; set; }
 }
